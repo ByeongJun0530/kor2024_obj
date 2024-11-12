@@ -20,7 +20,7 @@ public class BoardService1 {
         String content3 = null; String writer3 = null;  // 세 번째 게시물 내용
 
         // if : 다중 if는 다중 조건의 다중 결과를 충족할 수 있다.
-        // if ~ else if : 다중 조건의 무조건 1개 결과를 충족한다. 
+        // if ~ else if : 다중 조건의 무조건 1개 결과를 충족한다.
 
         while(true){ // 무한루프
             System.out.print("1.게시물 쓰기 2.게시물 출력 선택 : "); // 출력
@@ -43,7 +43,16 @@ public class BoardService1 {
                     System.out.println("게시물 쓰기 실패 : 빈 공간이 없습니다.");
                 } // else end
             } // if end
-            if (choose == 2) { // 만약에 입력한 값이 2이면 '게시물 출력' 구현
+            else if (choose == 2) { // 만약에 입력한 값이 2이면 '게시물 출력' 구현
+                if ( content1 != null ) {// 만약에 첫 번째 게시물이 존재하면
+                    System.out.printf("작성자 : %s, 내용 : %s\n", writer1, content1);
+                } // if end
+                if ( content2 != null ) {// 만약에 두 번째 게시물이 존재하면
+                    System.out.printf("작성자 : %s, 내용 : %s\n", writer2, content2);
+                } // if end
+                if ( content2 != null ) {// 만약에 세 번째 게시물이 존재하면
+                    System.out.printf("작성자 : %s, 내용 : %s\n", writer3, content3);
+                } // if end
 
             } // if end
         } // while end
