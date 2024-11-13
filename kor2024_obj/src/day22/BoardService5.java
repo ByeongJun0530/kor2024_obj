@@ -48,11 +48,9 @@ public class BoardService5 {
                 boardList.add(board);
             } else if (choose == 2) {
                 // 배열 내 존재하는 게시물 모두 출력하기
-                for (int index = 0; index <= boardList.size() - 1; index++) {
-                    if (boardList.get(index) != null) { // 게시물이 존재하면
+                for (int index = 0; index <= boardList.size() - 1; index++) { // 게시물이 존재하면
                         System.out.printf("내용 : %s, 작성자 : %s, 비밀번호 : %d\n",
                                 boardList.get(index).content, boardList.get(index).writer, boardList.get(index).pwd);
-                    }
                 } // f end
             }
         } // w end
