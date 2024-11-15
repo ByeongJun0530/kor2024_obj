@@ -1,6 +1,5 @@
 package day23.boardService8mvc;
 
-import day23.Board;
 import day23.boardService8mvc.view.BoardView;
 
 public class AppStart {
@@ -9,7 +8,14 @@ public class AppStart {
         // - 다른 클래스에 존재하는 함수를 호출하는 방법
         // -- 1.객체를 생성한 후 객체명.메소드명()
         // -- 단 패키지가 다르면 public 함수로 선언한다.
-        BoardView view = new BoardView();
-        view.mainPage();
+
+        /* 싱글톤 사용하기 전 */
+            //BoardView view = new BoardView();
+            //view.mainPage();
+
+        /* 싱글톤 사용했을 때 */
+        BoardView.getInstance().mainPage();
+            // BoardView.getInstance() ==> boardView
+            // boardView.mainPage();
     }//m end
 }//cls end
