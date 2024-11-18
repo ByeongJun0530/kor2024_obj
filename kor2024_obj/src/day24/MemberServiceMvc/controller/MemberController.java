@@ -1,7 +1,7 @@
 package day24.MemberServiceMvc.controller;
 
-import MemberServiceMvc.model.MemberDao;
-import MemberServiceMvc.model.MemberDto;
+import day24.MemberServiceMvc.model.MemberDao;
+import day24.MemberServiceMvc.model.MemberDto;
 
 import java.util.ArrayList;
 

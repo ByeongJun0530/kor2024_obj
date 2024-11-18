@@ -1,6 +1,6 @@
 package day24.MemberServiceMvc.view;
 
-import MemberServiceMvc.controller.MemberController;
+import day24.MemberServiceMvc.controller.MemberController;
 
 import java.util.Scanner;
 
