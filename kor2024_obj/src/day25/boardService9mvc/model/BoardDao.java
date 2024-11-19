@@ -17,8 +17,8 @@ public class BoardDao {
             --> 서로 다른 언어/프로그램 들 간의 공통된 형식/타입을 사용하므로 데이터 통신 목적!
 
             [CSV]
-            1. 쉼표로 구분된 문자열로 구성된 파일 형식
-            2. \n 백슬래시 + n 이용한 줄바꿈 처리를 한다.
+            1. 객체 내 쉼표로 구분된 문자열로 구성된 파일 형식
+            2. 객체간의 구분 \n 백슬래시 + n 이용한 줄바꿈 처리를 한다.
             2. .csv 확장자 가진다.
 
             [게시물 객체 CSV 형식으로 변환]
@@ -26,13 +26,16 @@ public class BoardDao {
             2. 하나의 문자열로 필드명을 제외한 필드값 들을, 쉼표로 구분하여 문자열로 반환 : "안녕하세요, 유재석, 1234"
 
             [여러개 게시물 객체가 존재 했을 때]
-            point1 : 필드간의 구분을 ,쉼표로 한다,
+            point1 : 객체 내 필드간의 구분을 ,쉼표로 한다,
             point2 : 객체 간의 구분을 \n으로 한다.
                 예] "안녕하세요, 유재석, 1234\n그래 안녕, 강호동, 4567"
      */
 
     private static BoardDao boardDao = new BoardDao();
-    private BoardDao(){}
+    private BoardDao(){
+        // - 싱글톤(static) 이 생성될 때 ( 프로그램이 실행 될 때 )
+        fileLoad();
+    }
     public static BoardDao getInstance(){
         return boardDao;
     }
@@ -61,8 +64,7 @@ public class BoardDao {
                 // 4. index 번째의 게시물 객체 내 필드값을 CSV 형식으로 변환, 필드값 출력 후 사이사이에 ,쉼표 이용한 CSV 형식 만들기
                 outStr += boardDto.getContent()+","+boardDto.getWriter()+","+boardDto.getPwd();
                 // += 복합대입 연산자 : 오른쪽 값을 왼쪽 변수 값과 더한 후 결과를 왼쪽 변수에 대입한다.
-                // 5. [객체 구분]
-                outStr += "\n";
+                outStr += "\n"; // 5. [객체 구분]
             } System.out.println(outStr); // 확인용
         // - try{}catch(){} : try{} 예상치 못한 예외가 발생했을 때 지정된 catch 코드로 흐름을 이동하는 문법
         try {
@@ -77,11 +79,11 @@ public class BoardDao {
         catch (IOException e) {e.printStackTrace();}
     }
     // =================== 영구 저장된 파일의 게시물들을 가져오는 기능 ==================== //
-    public void fileLoad(){
+    public void fileLoad(){ // (프로그래밍이 실행되었을 때 1번만 실행) // DAO 객체(싱글톤) 생성 될 때 메모장(txt) 불러오기를 한다.
 
         try {
             // [1] 파일 입력 객체 생성
-            FileInputStream inputStream = new FileInputStream("./src/dat25/boardService9mvc/data.txt");
+            FileInputStream inputStream = new FileInputStream("./src/day25/boardService9mvc/data.txt");
             // [2] 파일 용량만큼 바이트 배열 선언
             File file = new File("./src/day25/boardService9mvc/data.txt");
             byte[] bytes = new byte[(int) file.length()];
@@ -89,7 +91,31 @@ public class BoardDao {
             inputStream.read(bytes);
             // [4] 읽어온 바이트 배열을 문자열(String)으로 변환
             String inStr = new String(bytes);
-            // [5] 활용과제 : 파일로부터 읽어온 문자열의 게시물 정보들을 다시 ArrayList<BoardDto> boardDB 에 저장하시오.
+            // 활용과제 : 파일로부터 읽어온 문자열의 게시물 정보들을 다시 ArrayList<BoardDto> boardDB 에 저장하시오.
+            // 목표 : 파일로 가져온 문자열 내 저장된 여러개의 게시물들을 객체화하고 게시물 객체를 리스트에 담자.
+                // "안녕하세요, 유재석, 1234\n그래 안녕, 강호동, 4567"
+            // [1] 객체 구분 문자(\n 임의로), 문자열 분해 , "문자열".split("기준문자") : 문자열 내 기준문자 기준으로 분해 후 배열로 반환
+                // inStr = "안녕하세요, 유재석, 1234\n그래 안녕, 강호동, 4567"
+                // inStr.split("\n") -> ["안녕하세요, 유재석,1234","그래 안녕,강호동,4567"]
+                String[] objStr = inStr.split("\n");
+            // [2] 객체 내 필드 구분 문자(, : 쉼표)
+            for(int i = 0; i <= objStr.length - 1; i++){ // 마지막 줄 제외를 하기 위해 -1
+                // [3] 1개의 객체 필드 값들 가져오기
+                String obj = objStr[i];
+                // objStr = ["안녕하세요, 유재석,1234","그래 안녕,강호동,4567"]
+                // objStr[0] = "안녕하세요, 유재석, 1234"
+                // objStr[0].split(",") --> ["안녕하세요", "유재석", "1234"]
+                // field = ["안녕하세요", "유재석", "1234]"
+                // field[0] = "안녕하세요"
+                // [4] 문자열로 된 필드값들을 객체로 가져오기
+                String[] field = obj.split(",");
+                String content = field[0];
+                String writer = field[1];
+                int pwd = Integer.parseInt(field[2]); // String 타입을 int 으로 변환하는 방법, Integer.parseInt("문자열")
+                BoardDto boardDto = new BoardDto(content, writer, pwd);
+                // [5] 리스트에 담기
+                boardDB.add(boardDto);
+            }
 
         }catch (FileNotFoundException e){e.printStackTrace();}
         catch (IOException e){e.printStackTrace();}
