@@ -33,9 +33,22 @@ public class BoardDao {
 
     private static BoardDao boardDao = new BoardDao();
     private BoardDao(){
-        // - 싱글톤(static) 이 생성될 때 ( 프로그램이 실행 될 때 )
-        fileLoad();
-    }
+        // 만약에 파일을 로드 하는데.. 파일이 존재하지 않으면?
+            //[1] 파일 경로에 따른 파일 객체화
+        File file = new File("./src/day25/boardService9mvc/data.txt");
+            //[2] 객체화한 파일이 존재하는지 확인
+        if (file.exists()){ // - 지정한 경로에 파일이 있다.
+            // - 싱글톤(static) 이 생성될 때 ( 프로그램이 실행 될 때 )
+            fileLoad(); // 파일 로드
+        } else { // - 지정한 경로의 파일이 없다?
+            // .createNewFile() : 파일 생성
+            try {
+                file.createNewFile();
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        } //else end
+    }//생성자 end
     public static BoardDao getInstance(){
         return boardDao;
     }
