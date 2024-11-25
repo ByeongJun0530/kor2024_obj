@@ -1,6 +1,5 @@
 package day26.toDoService.view;
 
-import day23.boardService8mvc.controller.BoardController;
 import day26.toDoService.Controller.ToDoController;
 import day26.toDoService.model.ToDoDto;
 
@@ -21,7 +20,7 @@ public class ToDoView {
     void toDoWrite(){
         System.out.print("할 일 내용 : "); String content = scan.next();
         System.out.print("마감기한 : "); String deadLine  = scan.next();
-        System.out.print("상태 : "); boolean state = scan.nextBoolean();
+        System.out.print("상태 (완료 : true, 미완료 : false): "); boolean state = scan.nextBoolean();
         boolean result = ToDoController.getInstance().toDoWrite(content,deadLine,state);
         if (result) {
             System.out.println("등록 성공");
@@ -34,9 +33,10 @@ public class ToDoView {
     void toDoPrint(){
         ArrayList<ToDoDto> result = ToDoController.getInstance().toDoPrint();
         for (int index = 0; index <= result.size() - 1; index++){
-            System.out.print("할 일 내용 : " + result.get(index).getContent());
-            System.out.print("마감기한 : " + result.get(index).getDeadLine());
-            System.out.print("상태 : " + result.get(index).isState());
+            String stateStr = result.get(index).isState() ? "완료" : "미완료";
+            System.out.println("할 일 내용 : " + result.get(index).getContent());
+            System.out.println("마감기한 : " + result.get(index).getDeadLine());
+            System.out.println("상태 : " + stateStr);
         }
     }
 

@@ -1,0 +1,31 @@
+[ 데이터베이스 ]
+    데이터 : 자료, 베이스 : 모임/집합 => 자료 집합
+[ 데이터베이스 종류 ]
+    1. 트리 형태 2. 네트워크 3. NOSQL 4. *관계형*
+[ 관계형 데이터 베이스 ]
+    - 관계(둘 이상의 사람이 관련이 있음이나 관련 뜻)
+    1. 행(가로) 열(세로)로 이루어진 데이터의 집합 => 표/테이블
+    2. 표/테이블을 고유/식별 값을 참조하여 서로 다른 테이블끼리 종속되는 관계를 표현 하는 구조
+[ 관계형 데이터 베이스 제공하는 프로그램 = DBMS ]
+    1. Oracle 2. *mySQL* 3. MariaDB 4. Microsoft SQL Server
+[ 필수 용어 ]
+    1. DB : 데이터베이스
+    2. DBA : 데이터베이스 관리자
+    3. DBMS : 데이터베이스 관리 시스템
+    4. DB SERVER : 데이터베이스가 저장되고 데이터를 제공하는 컴퓨터
+        - SERVER : 데이터를 제공하는 컴퓨터 vs CLIENT : 데이터를 요청하는 컴퓨터
+    5. SQL : 데이터베이스 시스템 프로그램이 이해 할 수 있는 언어
+    [용어들 관계]
+    DB SERVER PC <----------------> 개발자(DBA)
+        - mySQL                     - 자신
+            <----- [한글]표 만들어 -----
+            <----- [SQL] create table 식단표() ---
+
+[ mySQL 설치 ]
+    1. https://dev.mysql.com/downloads/
+    2. [MySQL Installer for Windows] 클릭
+    3. Select Version: 8.x , Select Operating System: window
+    4. Windows (x86, 32-bit), MSI Installer 다운로드
+    5. [No, thanks, just start my download.] 클릭
+
+목표 : 자바에서 데이터베이스와 연동하여 데이터를 영구 저장 또는 관리
