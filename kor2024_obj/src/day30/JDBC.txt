@@ -44,9 +44,16 @@
                 -> ? : 기재된 SQL 내 ?의 순서번호
                 -> value : 앞 매개변수 ? 의 대입할 값
 
-           (2) ps.executeUpdate(), 현재 기재된 SQL를 실행하는 함수
+           (2) ps.executeUpdate(), 현재 기재된 SQL 를 실행하는 함수
+           (3) ResultSet rs = ps.executeQuery(), 현재 기재된 SQL 를 실행하고 조회된 결과를 반환 함수
 
-        3. ResultSet 인터페이스
+        3. ResultSet 인터페이스 : 실행된 SQL 조회 결과를 조작 하는 인터페이스
+            (1) rs.next() : 조회된 결과의 다음 레코드로 이동하는 함수
+                만약에 다음 레코드가 존재하면 true 존재하지 않으면 false
+            (2) rs.getXX("테이블 필드명") : 현재 조회중인 레코드의 지정한 필드명의 값 호출
+                XX : 호출할 데이터의 타입
+                - rs.getInt("num"); : 'num' 필드값을 int 타입으로 호출
+                - rs.getString("content");  : 'content' 필드값을 String 타입으로 호출
 
 
 

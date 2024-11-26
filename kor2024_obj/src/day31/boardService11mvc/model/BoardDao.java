@@ -1,4 +1,4 @@
-package day30.boardService10mvc.model;
+package day31.boardService11mvc.model;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ public class BoardDao {
     private BoardDao(){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb1125", "root", "1234");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb1126", "root", "1234");
             System.out.println("[BoardDao Connection ok]");
         }catch (ClassNotFoundException e){
             e.getMessage();
@@ -76,9 +76,11 @@ public class BoardDao {
                 int num = rs.getInt("num");               // 현재 조회중인 레코드의 게시물 번호(num) 값 호출
                 String content = rs.getString("content");        // 현재 조회중인 레코드의 게시물 내용(content) 값 호출
                 String writer = rs.getString("writer");         // 현재 조회중인 레코드의 게시물 작성자(writer) 값 호출
-                int pwd = rs.getInt("pwd");               // 현재 조회중인 레코드의 게시물 비밀번호(pwd) 값 호출
+                // int pwd = rs.getInt("pwd");               // 현재 조회중인 레코드의 게시물 비밀번호(pwd) 값 호출
+
                 // 7. 각 레코드의 호출된 필드값들을 객체화 --> DTO 생성
-                BoardDto boardDto = new BoardDto(content, writer, pwd);
+                BoardDto boardDto = new BoardDto(num, content, writer );
+
                 // 8. 1개의 레코드를 dto 객체로 변환 dto 를 리스트에 저장
                 list.add(boardDto);
             }// w end // - 반복문 1번 실행에 레코드 1개를 dto 로 변환
@@ -89,11 +91,52 @@ public class BoardDao {
             // 9. 구성한 리스트 객체를 반환
             return list;
     }
-}
-/*
-            예] 조회 결과가 아래와 같을 때 예시
-                num content     writer     pwd      <------ rs : 인터페이스가 조작할 수 있다. rs.next() : 다음 레코드로 이동
-                1. 자바에서 작성  유재석      1234     <-- (rs.next)
-                2. 안녕 db      강호동       4567     <-- (rs.next)
-                3. 하하하하하    하하         7897      <-- (rs.next)
-             */
+
+    // 3. 게시물 삭제 함수
+    public boolean boardDelete(int deleteNum){
+        try {
+            //1. SQL 작성
+            String sql = "delete from board where num = ?";
+            //2. SQL 기재 준비
+            PreparedStatement ps = conn.prepareStatement(sql);
+            //3. 기재된 SQL 조작, 기재된 SQL 매개변수 대입
+            ps.setInt(1, deleteNum); // 기재된 sql 내 첫번째 ? 'deleteNum' 삭제할 게시물번호 대입한다.
+            //4. 기재된 SQL 실행, //5. 실행결과
+            int result = ps.executeUpdate(); // delete 실행 후 delete 레코드 갯수를 반환, result(삭제된 레코드 수)
+            // 6. 메소드 반환
+            if (result == 1) {
+                return true; // 삭제 성공
+            }
+        } catch (SQLException e) {e.getMessage();}
+            return false; // 삭제 실패 : sql 오류 또는 삭제할 번호가 없을 때 오류
+    }//m end
+
+    // 4. 게시물 수정 dao 함수
+    public boolean boardUpdate(BoardDto updateDto) {
+        try {
+            // 1. sql 작성
+            String sql = "update board set content = ? where num = ?";
+            // 2. sql 기재 준비
+            PreparedStatement ps = conn.prepareStatement(sql);
+            // 3. 기재된 sql 조작
+            ps.setString(1, updateDto.getContent());
+            ps.setInt(2, updateDto.getNum());
+            // 4. 기재된 sql 실행, // 5. 실행결과
+            int result = ps.executeUpdate(); // 수정 sql 결과 변화가 있는 레코드 수 반환
+            // 6. 메소드 반환
+            if (result == 1) {
+                return true;
+            } // 만약에 레코드 변화가 1개 있으면 수정 성공
+        }catch (SQLException e){e.getMessage();}
+        return false;
+    }//m end
+}//cls end
+
+
+
+
+
+
+
+
+

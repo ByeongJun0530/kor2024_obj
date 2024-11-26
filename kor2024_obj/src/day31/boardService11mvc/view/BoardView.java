@@ -1,7 +1,7 @@
-package day30.boardService10mvc.view;
+package day31.boardService11mvc.view;
 
-import day30.boardService10mvc.controller.BoardController;
-import day30.boardService10mvc.model.BoardDto;
+import day31.boardService11mvc.controller.BoardController;
+import day31.boardService11mvc.model.BoardDto;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -21,10 +21,15 @@ public class BoardView {
     Scanner scan = new Scanner(System.in); // 입력객체
     public void mainPage(){ // view 시작 함수
         while (true) {
-            System.out.print("1.게시글 작성 2.게시글 출력 : ");
+            System.out.print("1.게시글 작성 2.게시글 출력 3.게시물 삭제 4.게시물 수정 : ");
             int choose = scan.nextInt();
             if (choose == 1) {boardWrite();}
             else if (choose == 2) {boardPrint();}
+            else if (choose == 3) {
+                boardDelete();
+            }else if (choose == 4){
+                boardUpdate();
+            }
 
         }//w end
     }//m end
@@ -56,8 +61,9 @@ public class BoardView {
         ArrayList<BoardDto> result = BoardController.getInstance().boardPrint(); // 게시물 출력 함수를 호출 // 싱글톤
         //출력
         for (int index = 0; index <= result.size() - 1; index++){
-            System.out.print("게시물 내용 : " + result.get(index).getContent());
-            System.out.println("작성자 : " + result.get(index).getWriter());
+            System.out.print(" 게시물 번호 : " + result.get(index).getNum());
+            System.out.print(" 게시물 내용 : " + result.get(index).getContent());
+            System.out.println(" 작성자 : " + result.get(index).getWriter());
         }//f end
     }//m end
     /*
@@ -65,4 +71,61 @@ public class BoardView {
         게시물 여러개 = Board[] 배열 또는 컬렉션 프레임워크 ArrayList<Board>
      */
 
+    // 3. 게시물 삭제 view 함수
+    void boardDelete(){
+        // 입력 -> 저장 -> 처리 -> 출력
+        // (1) 삭제할 게시물 번호 입력받기
+        System.out.println("삭제할 게시물 번호 : ");
+        int deleteNum = scan.nextInt(); // 게시물 번호의 타입이 int 이니까 int 타입
+        // (2) view 는 실질적인 처리를 하는 곳이 아니다. (입출력)
+            // - 삭제는 매개변수 : 삭제할 번호, 삭제는 반환값 : 성공 이라는 의미 부여 = true, 1 /실패 = false, 0
+        boolean result = BoardController.getInstance().boardDelete(deleteNum);
+        // (3) controller 처리 후 응답한 결과를 반환된 결과 출력
+        if (result){System.out.println("게시물 삭제 완료 ");}
+        else {System.out.println("게시물 삭제 실패[존재하지 않는 게시물 또는 관리자에게 문의]");}
+    }
+
+    // 4. 게시물 수정 view 함수
+    void boardUpdate(){
+        // 1. 입력
+        System.out.print("수정할 게시물 번호 : ");
+        int updateNum = scan.nextInt();
+        System.out.print("수정할 게시물 내용 : ");
+        String updateContent = scan.next();
+        //수정 게시물 객체
+        BoardDto updateDto = new BoardDto(updateNum, updateContent);
+        // 2. controller
+        boolean result = BoardController.getInstance().boardUpdate(updateDto);
+        // 3. 결과
+        if (result){
+            System.out.println("게시물 수정 성공");
+        }else {
+            System.out.println("게시물 수정 실패 : 존재하지 않는 게시물 또는 관리자에게 문의");
+        }
+    }
+
 }//cls end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

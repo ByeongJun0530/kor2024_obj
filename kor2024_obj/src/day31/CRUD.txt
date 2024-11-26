@@ -1,0 +1,25 @@
+[CRUD]
+    1. C( create ) : 쓰기 , 게시물 쓰기, 회원가입    , 제품 추가     , 쪽지 쓰기
+        DB : insert into 테이블명 (필드명1, 필드명2, 필드명3) values (값1, 값2, 값3)
+
+    2. R( read )   : 출력 , 게시물 출력, 내정보 출력 , 제품 목록 출력 , 내 쪽지 출력
+        DB : select 필드명 from 테이블명
+             select* from 테이블명
+             select* from 테이블명 where 조건필드 = 조건 값
+
+    3. U( update ) : 수정 , 게시물 수정, 내정보 수정 , 제품 수정     , 쪽지 읽음 변경
+        DB : update 테이블명 set 수정할 필드명 = 수정할 값 where 조건필드 = 조건 값
+
+    4. D( delete ) : 삭제 , 게시물 삭자, 회원탈퇴    , 제품 삭제     , 쪽지 삭제
+        DB : delete from 테이블명 where 조건필드 = 조건 값
+
+[ CRUD MVC 개발 순서 - 어려운 분들 ]
+    - 기능단위 개발 : 회원기능 구현, -> 기능 세분화 : 회원가입, 로그인, ID 찾기, PWD 찾기, 회원 탈퇴 등등
+        1. 회원가입 VIEW -> 2. 회원가입 Controller -> 회원가입 Dao (테스트)
+    - 추천하는 순서 :
+        1. View 구현
+        2. Controller 구현
+        3. Dao 구현
+        4. 테스트
+
+
