@@ -116,7 +116,7 @@ public class BoardDao {
         try {
             // 1. sql 작성
             String sql = "update board set content = ? where num = ?";
-            // 2. sql 기재 준비
+            // 2. sql 기재 준비get
             PreparedStatement ps = conn.prepareStatement(sql);
             // 3. 기재된 sql 조작
             ps.setString(1, updateDto.getContent());
